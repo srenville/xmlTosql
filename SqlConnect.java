@@ -19,22 +19,24 @@ import java.sql.Statement;
  * @author Toozigba
  */
 public class SqlConnect {
-    public  int runQuery(String Query) throws SQLException {
+    public  int runQuery(String Query,String id) throws SQLException {
         // TODO code application logic here
         
         Connection con = null;
         Statement state = null;
         ResultSet res =null;
-//        String query="INSERT INTO BillPackage(BillId,PackageId,BillDate) VALUES ('705','1',TO_DATE('31/01/2018', 'DD/MM/YYYY'))";
-//        String query2="INSERT INTO Package(PackageId,PackageType,PackageCost,AdditionalCharge) VALUES ('1','5GB one plan','199.00','55.00')";
+        ResultSet res2 =null;
+       String query="SELECT COUNT(PackageId) FROM BillPackage WHERE PackageId="+id;
+       String query2="SELECT COUNT(PackageId) FROM Package WHERE PackageId="+id;;
      
         con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "System","Supernova@135");
         state=con.createStatement();
         
-        state.executeQuery(Query);
+      
+          state.executeQuery(Query); 
        
         
-       // res=state.executeQuery("Select*From CUSTOMER");
+        
            
 //        while(res.next()){
 //            int id=res.getInt("CustomerId");

@@ -44,7 +44,12 @@ public class DomParser {
                 Element Package=(Element) p;
                 String id =Package.getAttribute("PackageId");
                 String query="INSERT INTO BillPackage(BillId,PackageId,BillDate) VALUES ('"+custId+"','"+id+"',TO_DATE('31/01/2018', 'DD/MM/YYYY'))";
-                sqlCon.runQuery(query);
+               try{ 
+                sqlCon.runQuery(query,id);
+               }
+               catch (Exception e){
+                   System.out.println("Duplicated Entry");
+               }
                 NodeList PackageChildren=Package.getChildNodes();
                 int j;
                 
@@ -66,8 +71,12 @@ public class DomParser {
                 }
                 
                String query2="INSERT INTO Package(PackageId,PackageType,PackageCost,AdditionalCharge) VALUES ('"+id+"','"+PackageType+"','"+PackageCost+"','"+addCost+"')"; 
-               sqlCon.runQuery(query2); 
-                
+               try{
+               sqlCon.runQuery(query2,id); 
+               }
+               catch(Exception e){
+                 System.out.println("Duplicated Entry");  
+               }
             }
             
         PackageType=null;
